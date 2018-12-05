@@ -1,3 +1,3 @@
-export default function (config) {
+module.exports = function (config) {
   return config
 }
