@@ -1,6 +1,6 @@
 {
-  "name": "hermes",
-  "version": "0.0.1",
+  "name": "@holismo/hermes",
+  "version": "0.1.0",
   "description": "Holismo's Client API",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alissonfpmorais/hermes.git"
+    "url": "alissonfpmorais/hermes"
   },
   "keywords": [
     "client",
