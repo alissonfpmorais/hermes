@@ -37,4 +37,4 @@ const assignParams = (conn, key, value) => {
   return conn
 }
 
-module.exports = { create, isValid, assignError, assignParams }
+module.exports = { execute, create, isValid, assignError, assignParams }
