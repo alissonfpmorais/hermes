@@ -1,6 +1,6 @@
 {
   "name": "@holismo/hermes",
-  "version": "0.1.2",
+  "version": "0.3.0",
   "description": "Holismo's Client API",
   "main": "index.js",
   "scripts": {
@@ -16,5 +16,11 @@
     "holismo"
   ],
   "author": "Dágora",
-  "license": "ISC"
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
 }
