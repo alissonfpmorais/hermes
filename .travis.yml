@@ -1,0 +1,8 @@
+deploy:
+  provider: npm
+  email: alissonfpmorais@gmail.com
+  api_key:
+    secure: u4eb/30W5h86cK5svz62FQUN2oBozWaFOhrYRUs7wGfpbzT/1Zf8TZPwIdbl1Qy+w5NjZiC0jtNwc2KtZi/9QUwi4nMU7HlH8lxxK4l/STJIBYmFe+fsLFBCvxScqpDlfkABsVHp9PY34RxVwIuwCFDmNK9hKSaw8K+ylIafPjX8i1R+WMGcS4eGkPwI69zfnVPCDUByXb+Jod4wLAsbK/6umG9URjcZoY6pMKrN9FNpZem7PmkjE+SLTZ6DDiDIl8u8vPicFRrHsTZY2h/uiZF1qXgHfrvKlzqZ1Et6yDiYMZ4iL9/Kq3yozCGdPxKHzqC7In+towlFwceo8TXMNzKcqCqHDcDwohBtKMkNvCrNF0eBM8eNPJWqknqJPcUmfupzE5wN/RJd6Er9wsQ91jvLrn2I5aDyRKPkoiWX1DlWA1HaK5JJVAoTOP3ecJcubiJWcvuOLqmCFXCmk+cMf4kuDgq/gVpKDxLCzyH3NnGQ3UDkFHVi6V2ps3wFynaU6EKwSfsiQJSJlWcKMI/a7L+rNFctx4Q7K7FY+RDz610kaQqn8ZgbtKpc2TLP4MLRnv4NnUSg9Z49uKfEDXfRgiHfjfJXCDmx4eEiZh3mm9WsrPTaV5LPrzQODslPzES2outfFdmzJXMI03uwegy73GP0gL9XowqCGqC74/tBw30=
+  on:
+    tags: true
+    repo: alissonfpmorais/hermes
