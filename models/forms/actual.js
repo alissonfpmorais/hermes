@@ -21,9 +21,9 @@ const list = (conn, path) => (() => {
   return conn.execute(conn, request)
 })
 
-const create = (conn, path) => ((name, fields) => {
+const create = (conn, path) => ((token, name, fields) => {
   const data = fromShape(name, fields)
-  const request = api.create(conn, path, data)
+  const request = api.create(conn, path, token, data)
   return conn.execute(conn, request)
 })
 
@@ -34,12 +34,12 @@ const get = (conn, path) => ((id) => {
 
 const update = (conn, path) => ((id, name, fields) => {
   const data = fromShape(name, fields)
-  const request = api.update(conn, path, id, data)
+  const request = api.update(conn, path, token, id, data)
   return conn.execute(conn, request)
 })
 
 const remove = (conn, path) => ((id) => {
-  const request = api.get(conn, path, id)
+  const request = api.get(conn, path, token, id)
   return conn.execute(conn, request)
 })
 

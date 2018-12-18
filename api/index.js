@@ -9,11 +9,11 @@ const list = (conn, path) => ({
   url: path
 })
 
-const create = (conn, path, data) => ({
+const create = (conn, path, token, data) => ({
   method: 'POST',
   url: path,
   data: data,
-  headers: { 'Authorization': `Bearer ${conn.params.token}` }
+  headers: { 'Authorization': `Bearer ${token}` }
 })
 
 const get = (conn, path, id) => ({
@@ -21,17 +21,17 @@ const get = (conn, path, id) => ({
   url: `${path}/${id}`
 })
 
-const update = (conn, path, id, data) => ({
+const update = (conn, path, token, id, data) => ({
   method: 'PUT',
   url: `${path}/${id}`,
   data: data,
-  headers: { 'Authorization': `Bearer ${conn.params.token}` }
+  headers: { 'Authorization': `Bearer ${token}` }
 })
 
-const remove = (conn, path, id) => ({
+const remove = (conn, path, token, id) => ({
   method: 'DELETE',
   url: `${path}/${id}`,
-  headers: { 'Authorization': `Bearer ${conn.params.token}` }
+  headers: { 'Authorization': `Bearer ${token}` }
 })
 
-module.exports = { list, create, get, update, remove }
+module.exports = { auth, list, create, get, update, remove }
