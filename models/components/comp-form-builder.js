@@ -7,7 +7,7 @@ const merge = (parent, child, excludesFromParent, childKeyName) => {
   }, JSON.parse(JSON.stringify(parent)))
 
   return Object.keys(p).reduce((acc, key) => {
-    acc[`${childKeyName}-#-${key}`] = p[key]
+    acc[`${childKeyName}-#-${key}-@-${typeof(p[key])}`] = p[key]
     return acc
   }, JSON.parse(JSON.stringify(child)))
 }
@@ -71,20 +71,34 @@ const parseFromFields = (fields) => {
     const rejectWith = (prefixes) => ((detail) => {
       return !prefixes.reduce((acc, prefix) => acc || detail.key.startsWith(prefix), false)
     })
-    const computeAccept = (separator) => ((acc, detail) => {
-      acc[detail.key.split(separator)[1]] = detail.value[0]
+    const computeAccept = (kindSeparator, typeSeparator) => ((acc, detail) => {
+      const key = (detail.key.split(kindSeparator)[1]).split(typeSeparator)[0]
+      const type = detail.key.split(typeSeparator)[1]
+
+      if (type === 'number') {
+        acc[key] = Number(detail.value[0])
+      } else if (type === 'boolean' && detail.value[0] === 'false') {
+        acc[key] = false
+      } else if (type === 'boolean' && detail.value[0] === 'true') {
+        acc[key] = true
+      } else {
+        acc[key] = detail.value[0]
+      }
+
       return acc
     })
-    const computeReject = (acc, detail) => {
+    const computeReject = (kindSeparator, typeSeparator) => ((acc, detail) => {
+
+
       acc[detail.key] = detail.value[0]
       return acc
-    }
+    })
 
-    const section = buildObjectFrom(field.details, acceptWith('section-#-'), computeAccept('-#-'))
-    const row = buildObjectFrom(field.details, acceptWith('row-#-'), computeAccept('-#-'))
+    const section = buildObjectFrom(field.details, acceptWith('section-#-'), computeAccept('-#-', '-@-'))
+    const row = buildObjectFrom(field.details, acceptWith('row-#-'), computeAccept('-#-', '-@-'))
     const control = buildObjectFrom(field.details, rejectWith(['data-#-', 'section-#-', 'row-#-']), computeReject)
 
-    if (!accField.data) accField.data = buildObjectFrom(field.details, acceptWith('data-#-'), computeAccept('-#-'))
+    if (!accField.data) accField.data = buildObjectFrom(field.details, acceptWith('data-#-'), computeAccept('-#-', '-@-'))
 
     const lastSection = mutateObject(accField.data, 'sections', section)
     const lastRow = mutateObject(lastSection, 'rows', row)
