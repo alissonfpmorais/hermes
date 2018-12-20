@@ -1,5 +1,12 @@
 const argumentError = require('../../error.js')
 
+const classifyAttributes = (control) => {
+  return Object.keys(control).reduce((acc, key) => {
+    acc[`${key}-@-${typeof(control[key])}`] = control[key]
+    return acc
+  }, JSON.parse(JSON.stringify(control)))
+}
+
 const merge = (parent, child, excludesFromParent, childKeyName) => {
   const p = excludesFromParent.reduce((acc, exclude) => {
     delete acc[exclude]
@@ -16,6 +23,7 @@ const parseFromControls = (formBuilder) => {
   return formBuilder.data.sections.reduce((accSection, section) => {
     const resSection = section.rows.reduce((accRow, row) => {
       const resRow = row.controls.map(control => {
+        control = classifyAttributes(control)
         control = merge(formBuilder.data, control, ['sections'], 'data')
   			control = merge(section, control, ['rows'], 'section')
   			control = merge(row, control, ['controls'], 'row')
@@ -87,16 +95,26 @@ const parseFromFields = (fields) => {
 
       return acc
     })
-    const computeReject = (kindSeparator, typeSeparator) => ((acc, detail) => {
+    const computeReject = (typeSeparator) => ((acc, detail) => {
+      const key = detail.key.split(typeSeparator)[0]
+      const type = detail.key.split(typeSeparator)[1]
 
+      if (type === 'number') {
+        acc[key] = Number(detail.value[0])
+      } else if (type === 'boolean' && detail.value[0] === 'false') {
+        acc[key] = false
+      } else if (type === 'boolean' && detail.value[0] === 'true') {
+        acc[key] = true
+      } else {
+        acc[key] = detail.value[0]
+      }
 
-      acc[detail.key] = detail.value[0]
       return acc
     })
 
     const section = buildObjectFrom(field.details, acceptWith('section-#-'), computeAccept('-#-', '-@-'))
     const row = buildObjectFrom(field.details, acceptWith('row-#-'), computeAccept('-#-', '-@-'))
-    const control = buildObjectFrom(field.details, rejectWith(['data-#-', 'section-#-', 'row-#-']), computeReject)
+    const control = buildObjectFrom(field.details, rejectWith(['data-#-', 'section-#-', 'row-#-']), computeReject('-@-'))
 
     if (!accField.data) accField.data = buildObjectFrom(field.details, acceptWith('data-#-'), computeAccept('-#-', '-@-'))
 
