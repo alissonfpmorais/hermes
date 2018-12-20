@@ -96,6 +96,7 @@ const parseFromFields = (fields) => {
 
 const parseFromForm = (form) => {
   const builder = parseFromFields(form.fields)
+  builder.id = form.id
   builder.title = form.name
 
   return builder
