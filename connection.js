@@ -9,9 +9,9 @@ const execute = (conn, request) => {
       data: response.data
     }))
     .catch(error => ({
-      headers: response.headers,
-      status: response.status,
-      data: response.data
+      headers: error.response.headers,
+      status: error.response.status,
+      data: error.response.data
     }))
 }
 
