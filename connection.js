@@ -1,5 +1,6 @@
 const axios = require('axios')
 
+// Format Axios response
 const execute = (conn, request) => {
   return conn
     .http(request)
@@ -15,6 +16,7 @@ const execute = (conn, request) => {
     }))
 }
 
+// Create an object connection with all required params
 const create = (params) => ({
   baseUrl: params.url,
   http: axios.create({ baseURL: params.url }),
@@ -23,14 +25,17 @@ const create = (params) => ({
   params: {}
 })
 
+// Check if object connection is valid
 const isValid = (conn) => conn.error.hasError
 
+// Add an error to object connection
 const assignError = (conn, type, message) => {
   conn = JSON.parse(JSON.stringify(conn))
   conn.error = { hasError: true, type: type, message: message }
   return conn
 }
 
+// Add a new parameter to object connection
 const assignParams = (conn, key, value) => {
   conn = JSON.parse(JSON.stringify(conn))
   conn.params[key] = value
